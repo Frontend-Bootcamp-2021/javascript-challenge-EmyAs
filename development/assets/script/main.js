@@ -313,4 +313,23 @@ let data = [
 	}
 ];
 
-console.log('👻', data)
+//console.log('👻', data)
+
+const outputs = Object.values(
+	data.reduce((a, { group, ...item }) => {
+		if (!a[group]) {
+			a[group] = { group, data: [] };
+		}
+		a[group].data.push(item);
+		return a;
+	}, {})
+);
+
+for (let i = 0; i < outputs.length; i++) {
+	document.write("<h1> Group "+ (i+1) +" : "+ JSON.stringify(outputs[i].group) + "<br></h1>");
+	for (let j = 0; j < outputs[i].data.length; j++) {
+		if(outputs[i].data[j].assistant == true){
+			document.write("<div><h3> The assistant:"+ JSON.stringify(outputs[i].data[j].name) + "</h3>");
+		}else{document.write( JSON.stringify(outputs[i].data[j].name) + "<br><br><br></div>"); }	
+	}
+}
